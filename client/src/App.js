@@ -4,21 +4,29 @@ import './App.css';
 function App() {
 
   const [data, setData] = useState(null)
+  const [currentRoom, setCurrentRoom] = useState("/chatRoom/cats");
 
   useEffect(() => {
-    fetch("/api")
+    if (currentRoom !== null) {
+    fetch(currentRoom)
       .then(res => res.json())
       .then((res) => {
         // console.log(res)
         // console.log(data)
         if (data === null || res.length !== data.length) {
+          console.log("reached")
           setData(res)
         }
         else {
           return null
         }
       })
-  }, [data])
+    }
+    else {
+      return null
+    }
+  }, [data, currentRoom])
+
 
   if (data !== null) {
     return (
