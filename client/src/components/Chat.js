@@ -33,7 +33,7 @@ function Chat(props) {
         <form method="post" action="/chat">
         <input name="author" type="text" placeholder="Please enter your name"/>
         <input name="body" type="text" placeholder="enter message here..." />
-        <input type="submit" />
+        <input type="submit" value="chat"/>
         <input type="submit" value="Refresh" />
         </form>
       </div>

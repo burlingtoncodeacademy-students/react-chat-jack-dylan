@@ -4,13 +4,14 @@ const path = require("path");
 
 const port = process.env.PORT || 8000;
 const app = express();
+
 const staticDir = process.env.DEV ? "./client/public" : "./client/build";
 
 app.use(express.static(staticDir));
 
 const mongoose = require("mongoose")
 
-mongoose.connect("mongodb://localhost:27017/chat-db", {
+mongoose.connect(`mongodb+srv://JackLavallee:${process.env.PASSWORD}@cluster0.wu014.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -76,7 +77,7 @@ async function findAll() {
 // Takes all chats of a room and throws them into an array of objects
 async function findAllChatsInRoom(roomName) {
   let roomChats = (await Chat.find({roomName: roomName})).map((chat) => {
-    console.log(chat)
+    //console.log(chat)
     return chat
   })
   return roomChats
@@ -87,9 +88,9 @@ db.on("error", console.error.bind(console, "connection error"));
 // get specific roomId
 app.get('/chatRoom/:roomId', async (req, res) => {
   let roomId = req.params.roomId
-  console.log(roomId)
+  //console.log(roomId)
   let chatResult = await findAllChatsInRoom(roomId)
-  console.log(chatResult)
+  //console.log(chatResult)
   res.send(chatResult)
 })
 
@@ -99,10 +100,10 @@ app.get('/api', async (req, res) => {
   res.send(chatResult)
 })
 
-app.post("/chat", async (req, res) => {
+app.post("/chat", express.urlencoded(), async (req, res) => {
   let test = req.body
- console.log(test)
-  await newChat(Date.now(), toString(test.author), toString(test.body))
+  console.log("test: ", test)
+  await newChat(Date.now(), test.author, test.body)
   res.redirect('/')
 })
 
