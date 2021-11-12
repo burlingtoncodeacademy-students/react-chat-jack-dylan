@@ -40,7 +40,7 @@ async function newChat(date, author, body) {
 // Takes all chats of Chat model and throws them into an array of objects
 async function findAll() {
   let allChats = (await Chat.find({})).map((chat) => {
-    console.log(chat)
+    // console.log(chat)
     return chat
   })
   return allChats
@@ -61,6 +61,13 @@ app.get('/chatRoom/:roomId', (req, res) => {
 app.get('/api', async (req, res) => {
   let result = await findAll({})
   res.send(result)
+})
+
+app.post("/chat", async (req, res) => {
+  let test = req.body
+ console.log(test)
+  await newChat(Date.now(), toString(test.author), toString(test.body))
+  res.redirect('/')
 })
 
 app.listen(port, () => {

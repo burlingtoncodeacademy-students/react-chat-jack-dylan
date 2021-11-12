@@ -9,8 +9,8 @@ function App() {
     fetch("/api")
       .then(res => res.json())
       .then((res) => {
-        console.log(res)
-        console.log(data)
+        // console.log(res)
+        // console.log(data)
         if (data === null || res.length !== data.length) {
           setData(res)
         }
@@ -23,9 +23,9 @@ function App() {
   if (data !== null) {
     return (
       <div className="App">
-        {console.log(data)}
+        {/* {console.log(data)} */}
         {data.map(item => {
-          return <h1>{item.author}: {item.body}</h1>
+          return <h5 class="chatText" >{item.author}: {item.body}</h5>
         })}
       </div>
     )
