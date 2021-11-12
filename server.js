@@ -78,7 +78,7 @@ async function findAll() {
 // Takes all chats of a room and throws them into an array of objects
 async function findAllChatsInRoom(roomName) {
   let roomChats = (await Chat.find({roomName: roomName})).map((chat) => {
-    // console.log(chat)
+    console.log("chat: ", chat)
     return chat
   })
   return roomChats
@@ -86,24 +86,22 @@ async function findAllChatsInRoom(roomName) {
 
 db.on("error", console.error.bind(console, "connection error"));
 
-// let roomName
-
 // get specific roomId
-app.get('/chatRoom/:roomId', async (req, res) => {
-  let roomName = req.params.roomId
-  // console.log(roomId)
+app.get('/chatRoom/:roomName', async (req, res) => {
+  let roomName = req.params.roomName
+  console.log(roomName)
   let chatResult = await findAllChatsInRoom(roomName)
-  // console.log(chatResult)
+  console.log(chatResult)
   res.send(chatResult)
 })
 
 
 
-app.post("/chat/:roomId", express.urlencoded(), async (req, res) => {
+app.post("/chat/:roomName", express.urlencoded(), async (req, res) => {
   let post = req.body
-  roomId = req.params.roomId
+  roomName = req.params.roomName
 //  console.log(post)
-  await newChat(Date.now(), post.author, post.body, roomId)
+  await newChat(Date.now(), post.author, post.body, roomName)
   res.redirect('/')
 })
 
@@ -115,9 +113,9 @@ app.get('/api', async (req, res) => {
 
 app.post("/chat", express.urlencoded(), async (req, res) => {
   let post = req.body
-  roomId = 'Main'
+  roomName = 'Main'
 //  console.log(post)
-  await newChat(Date.now(), post.author, post.body, roomId)
+  await newChat(Date.now(), post.author, post.body, roomName)
   res.redirect('/')
 })
 

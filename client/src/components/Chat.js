@@ -2,13 +2,14 @@ import { React } from "react";
 import { useState, useEffect } from "react";
 import "./Chat.css";
 import App from "../App";
+import Rooms from "./Rooms";
 
 
 
 
 function Chat() {
   const [data, setData] = useState(null)
-  const [currentRoom, setCurrentRoom] = useState('main');
+  const [currentRoom, setCurrentRoom] = useState('/chatRoom/Main');
 
   return (
     <div id="container">
@@ -20,19 +21,13 @@ function Chat() {
       </div>
       <div id="middle">
         <div id="chatBox">
-          
             <App data={data} setData={setData} currentRoom={currentRoom} setCurrentRoom={setCurrentRoom} />
-          
         </div>
         <div id="sideList">
           <label for="allRooms">
             <b>All Rooms</b>
           </label>
-          <ul id="allRooms">
-          <li><a href="/chat/main" >Main</a></li>
-            <li><a href="/chat/dogs" >Dogs</a></li>
-            <li><a href="/chat/cats" >Cats</a></li>
-          </ul>
+          <Rooms currentRoom={currentRoom} setCurrentRoom={setCurrentRoom}></Rooms>
         </div>
       </div>
       <div id="form-area">
