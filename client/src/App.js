@@ -20,7 +20,7 @@ function App(props) {
     else {
       return null
     }
-  }, [props.data, props.currentRoom])
+  }, [props.currentRoom, props.data])
 
 
   if (props.data !== null) {

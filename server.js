@@ -97,12 +97,11 @@ app.get('/chatRoom/:roomName', async (req, res) => {
 
 
 
-app.post("/chat/:roomName", express.urlencoded(), async (req, res) => {
+app.post("/chatRoom/:roomName", express.urlencoded(), async (req, res) => {
   let post = req.body
   roomName = req.params.roomName
 //  console.log(post)
   await newChat(Date.now(), post.author, post.body, roomName)
-  res.redirect('/')
 })
 
 // Get home page
@@ -111,13 +110,13 @@ app.get('/api', async (req, res) => {
   res.send(chatResult)
 })
 
-app.post("/chat", express.urlencoded(), async (req, res) => {
-  let post = req.body
-  roomName = 'Main'
-//  console.log(post)
-  await newChat(Date.now(), post.author, post.body, roomName)
-  res.redirect('/')
-})
+// app.post("/chat", express.urlencoded(), async (req, res) => {
+//   let post = req.body
+//   roomName = 'main'
+// //  console.log(post)
+//   await newChat(Date.now(), post.author, post.body, roomName)
+//   res.redirect('/')
+// })
 
 app.listen(port, () => {
   console.log('listening on port: ' + port) 
