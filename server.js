@@ -8,6 +8,7 @@ const app = express();
 const staticDir = process.env.DEV ? "./client/public" : "./client/build";
 
 app.use(express.static(staticDir));
+app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require("mongoose")
 
@@ -44,7 +45,7 @@ async function newChat(date, author, body, roomName) {
   
   await chat.save();
 
-  findAll()
+  // findAll()
 }
 
 // async function newRoom(name) {
@@ -77,7 +78,7 @@ async function findAll() {
 // Takes all chats of a room and throws them into an array of objects
 async function findAllChatsInRoom(roomName) {
   let roomChats = (await Chat.find({roomName: roomName})).map((chat) => {
-    //console.log(chat)
+    // console.log(chat)
     return chat
   })
   return roomChats
@@ -85,13 +86,25 @@ async function findAllChatsInRoom(roomName) {
 
 db.on("error", console.error.bind(console, "connection error"));
 
+// let roomName
+
 // get specific roomId
 app.get('/chatRoom/:roomId', async (req, res) => {
-  let roomId = req.params.roomId
-  //console.log(roomId)
-  let chatResult = await findAllChatsInRoom(roomId)
-  //console.log(chatResult)
+  let roomName = req.params.roomId
+  // console.log(roomId)
+  let chatResult = await findAllChatsInRoom(roomName)
+  // console.log(chatResult)
   res.send(chatResult)
+})
+
+
+
+app.post("/chat/:roomId", express.urlencoded(), async (req, res) => {
+  let post = req.body
+  roomId = req.params.roomId
+//  console.log(post)
+  await newChat(Date.now(), post.author, post.body, roomId)
+  res.redirect('/')
 })
 
 // Get home page
@@ -101,9 +114,10 @@ app.get('/api', async (req, res) => {
 })
 
 app.post("/chat", express.urlencoded(), async (req, res) => {
-  let test = req.body
-  console.log("test: ", test)
-  await newChat(Date.now(), test.author, test.body)
+  let post = req.body
+  roomId = 'Main'
+//  console.log(post)
+  await newChat(Date.now(), post.author, post.body, roomId)
   res.redirect('/')
 })
 
