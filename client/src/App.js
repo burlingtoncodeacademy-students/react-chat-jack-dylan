@@ -3,7 +3,7 @@ import './App.css';
 
 function App(props) {
 
-  useEffect(() => {
+    useEffect(() => {
     if (props.currentRoom !== null) {
     {console.log(props.currentRoom)}
     fetch(props.currentRoom)
@@ -28,7 +28,7 @@ function App(props) {
       <div className="App">
         {props.data.map(item => {
           {console.log(item)}
-          return <h5 class="chatText" >{item.author}: {item.body} {item.roomName}</h5>
+          return <h5 class="chatText" >{item.author}: {item.body}</h5>
         })}
       </div>
     )

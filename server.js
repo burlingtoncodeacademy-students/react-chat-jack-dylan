@@ -16,6 +16,13 @@ mongoose.connect(`mongodb+srv://JackLavallee:${process.env.PASSWORD}@cluster0.wu
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
+
+// mongoose.connect("mongodb://localhost:27017/chat-db", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// })
+
+
 const db = mongoose.connection;
 
 // Chat entry schema
@@ -74,7 +81,6 @@ app.get('/chatRoom/:roomName', async (req, res) => {
   let chatResult = await findAllChatsInRoom(roomName)
   res.send(chatResult)
 })
-
 
 
 app.post("/chatRoom/:roomName", express.urlencoded(), async (req, res) => {

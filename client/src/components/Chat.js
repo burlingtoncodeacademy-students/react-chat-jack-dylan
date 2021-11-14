@@ -12,13 +12,17 @@ function Chat() {
   const [data, setData] = useState(null)
   const [currentRoom, setCurrentRoom] = useState('/chatRoom/main');
 
+  function eventHandler(newRoom) {
+    // console.log(newRoom)
+    setCurrentRoom(newRoom)
+  }
 
   return (
     <div id="container">
       <div id="header">
-        <h1>Chat Room Header</h1>
+        <h1>Chat Room</h1>
         <h2>
-          Greetings <span id="userName">id="userName"</span>
+          Greetings <span id="userName"></span>
         </h2>
       </div>
       <div id="middle">
