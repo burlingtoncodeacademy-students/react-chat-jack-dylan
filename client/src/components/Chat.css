@@ -62,12 +62,13 @@ form {
   padding: 1em;
 }
 
-input {
+input,
+button,
+h5 {
   background-color: white;
 }
 
 h5 {
-  background-color: white;
   margin: 0;
   padding: 0;
   text-align: left;
