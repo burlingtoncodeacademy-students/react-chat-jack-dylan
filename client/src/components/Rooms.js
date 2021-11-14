@@ -8,32 +8,32 @@ function Rooms(props) {
     return(
         <ul id="allRooms">
             <li>
-                <form action="/chatRoom/main" type="POST">
-                    <input type="submit" value="Main" onClick={ (evt) => {
+                <form action="/chatRoom/main" type="POST" onSubmit={ (evt) => {
                             eventHandler("/chatRoom/main")
                             evt.preventDefault()
                         }
-                    }/>
+                }>
+                    <input type="submit" value="Main"/>
                 </form>
             </li>
 
             <li>
-                <form action="/chatRoom/dogs" type="POST">
-                    <input type="submit" value="Dogs" onClick={ (evt) => {
+                <form action="/chatRoom/dogs" type="POST" onSubmit={ (evt) => {
                             eventHandler("/chatRoom/dogs")
                             evt.preventDefault()
                         }
-                    }/>
+                }>
+                    <input type="submit" value="Dogs"/>
                 </form>
             </li>
 
             <li>
-                <form action="/chatRoom/cats" type="POST">
-                    <input type="submit" value="Cats" onClick={ (evt) => {
+                <form action="/chatRoom/cats" type="POST" onSubmit={ (evt) => {
                             eventHandler("/chatRoom/cats")
                             evt.preventDefault()
                         }
-                    }/>
+                }>
+                    <input type="submit" value="Cats"/>
                 </form>
             </li>
         </ul>

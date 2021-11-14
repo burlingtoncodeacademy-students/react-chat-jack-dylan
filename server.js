@@ -26,11 +26,6 @@ const chatSchema = new mongoose.Schema({
   roomName: String
 })
 
-// const roomSchema = new mongoose.Schema({
-//   name: String,
-//   chats: [chatSchema]
-// })
-
 let Chat = mongoose.model("Chat", chatSchema)
 
 // Creates a new chat object and pushes it up to the database
@@ -42,34 +37,21 @@ async function newChat(date, author, body, roomName) {
     body: body,
     roomName: roomName
   })
-  
-  await chat.save();
+
+  // if (chat.body.length > 500) {
+  //   console.log("Your post exceeded 500 characters...")
+  //   return null
+  // }
+  // else {
+    await chat.save();
+  //}
 
   // findAll()
 }
 
-// async function newRoom(name) {
-
-//   let roomModel = mongoose.model(name, roomSchema)
-//   let room = new roomModel({
-//     name: name,
-//     chats: []
-//   })
-
-//   await room.save()
-// }
-
-//newRoom("Dogs")
-
-
-// async function findRoom(roomName) {
-//   let allRooms = (await Room.find({}))
-// }
-
 // Takes all chats of a room and throws them into an array of objects
 async function findAll() {
   let allChats = (await Chat.find({})).map((chat) => {
-    // console.log(chat)
     return chat
   })
   return allChats
@@ -89,9 +71,7 @@ db.on("error", console.error.bind(console, "connection error"));
 // get specific roomId
 app.get('/chatRoom/:roomName', async (req, res) => {
   let roomName = req.params.roomName
-  console.log(roomName)
   let chatResult = await findAllChatsInRoom(roomName)
-  console.log(chatResult)
   res.send(chatResult)
 })
 
@@ -99,9 +79,9 @@ app.get('/chatRoom/:roomName', async (req, res) => {
 
 app.post("/chatRoom/:roomName", express.urlencoded(), async (req, res) => {
   let post = req.body
-  roomName = req.params.roomName
-//  console.log(post)
+  let roomName = req.params.roomName
   await newChat(Date.now(), post.author, post.body, roomName)
+  res.redirect("/chatRoom/" + roomName)
 })
 
 // Get home page
@@ -109,14 +89,6 @@ app.get('/api', async (req, res) => {
   let chatResult = await findAll({})
   res.send(chatResult)
 })
-
-// app.post("/chat", express.urlencoded(), async (req, res) => {
-//   let post = req.body
-//   roomName = 'main'
-// //  console.log(post)
-//   await newChat(Date.now(), post.author, post.body, roomName)
-//   res.redirect('/')
-// })
 
 app.listen(port, () => {
   console.log('listening on port: ' + port) 

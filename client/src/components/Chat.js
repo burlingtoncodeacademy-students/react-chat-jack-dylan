@@ -1,15 +1,17 @@
 import { React } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Chat.css";
 import App from "../App";
 import Rooms from "./Rooms";
 
-
-
+let chatBox = null
 
 function Chat() {
+
+
   const [data, setData] = useState(null)
   const [currentRoom, setCurrentRoom] = useState('/chatRoom/main');
+
 
   return (
     <div id="container">
@@ -32,10 +34,12 @@ function Chat() {
       </div>
       <div id="form-area">
         <form method="post" action={currentRoom}>
-        <input name="author" type="text" placeholder="Please enter your name"/>
-        <input name="body" type="text" placeholder="enter message here..." />
-        <input type="submit" value="chat"/>
-        <input type="submit" value="Refresh" />
+          <input name="author" type="text" placeholder="Please enter your name"/>
+          <input name="body" type="text" placeholder="Enter message here..." />
+          <input type="submit" value="Chat" />
+        </form>
+        <form method="get" action={currentRoom}>
+          <input type="submit" value="Refresh" />
         </form>
       </div>
     </div>
