@@ -1,41 +1,44 @@
-import {useEffect, useState} from 'react'
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
+import ChatBox from "./components/ChatBox";
 
-function App(props) {
+function App() {
 
-    useEffect(() => {
-    if (props.currentRoom !== null) {
-    {console.log(props.currentRoom)}
-    fetch(props.currentRoom)
-      .then(res => res.json())
-      .then((res) => {
-        if (props.data === null || res.length !== props.data.length) {
-          props.setData(res)
-        }
-        else {
-          return null
-        }
-      })
-    }
-    else {
+  const [data, setData] = useState(null)
+  const [currentUser, setCurrentUser] = useState(document.cookie.userName)
+  const [currentRoom, setCurrentRoom] = useState(document.cookie.roomName)
+  const [currentURL, setCurrentURL] = useState(
+    `/${currentUser}/${currentRoom}`
+  );
+  
+  useEffect(() => {
+    if (
+      !currentURL.includes(currentUser) &&
+      !currentURL.includes(currentRoom) &&
+      currentUser !== undefined &&
+      currentRoom !== undefined 
+    ) {
+      setCurrentUser(document.location.href.split("/")[3]);
+      setCurrentURL(`/${currentUser}/${currentRoom}`);
+      
+      fetch(currentURL)
+        .then((res) => res.json())
+        .then((res) => {
+          setData(res)
+        });
+    } else {
       return null
     }
-  }, [props.currentRoom, props.data])
+  }, [currentRoom, currentURL, data]);
 
-
-  if (props.data !== null) {
+  console.log(data);
+  if (data !== null) {
     return (
-      <div className="App">
-        {props.data.map(item => {
-          {console.log(item)}
-          return <h5 class="chatText" >{item.author}: {item.body}</h5>
-        })}
-      </div>
+      <ChatBox data={data} currentUser={currentUser}></ChatBox>
     )
-  }
-  else {
-    return null
+  } else {
+    return null;
   }
 }
 
-export default App
+export default App;

@@ -1,14 +1,17 @@
 require("dotenv").config();
 const express = require("express");
-const path = require("path");
 
 const port = process.env.PORT || 8000;
 const app = express();
 
 const staticDir = process.env.DEV ? "./client/public" : "./client/build";
 
+let cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 app.use(express.static(staticDir));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+
 
 const mongoose = require("mongoose")
 
@@ -16,11 +19,6 @@ mongoose.connect(`mongodb+srv://JackLavallee:${process.env.PASSWORD}@cluster0.wu
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-
-// mongoose.connect("mongodb://localhost:27017/chat-db", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// })
 
 
 const db = mongoose.connection;
@@ -45,15 +43,10 @@ async function newChat(date, author, body, roomName) {
     roomName: roomName
   })
 
-  // if (chat.body.length > 500) {
-  //   console.log("Your post exceeded 500 characters...")
-  //   return null
-  // }
-  // else {
-    await chat.save();
-  //}
+  await chat.save();
 
-  // findAll()
+
+  //findAll()
 }
 
 // Takes all chats of a room and throws them into an array of objects
@@ -67,7 +60,6 @@ async function findAll() {
 // Takes all chats of a room and throws them into an array of objects
 async function findAllChatsInRoom(roomName) {
   let roomChats = (await Chat.find({roomName: roomName})).map((chat) => {
-    console.log("chat: ", chat)
     return chat
   })
   return roomChats
@@ -75,19 +67,40 @@ async function findAllChatsInRoom(roomName) {
 
 db.on("error", console.error.bind(console, "connection error"));
 
-// get specific roomId
-app.get('/chatRoom/:roomName', async (req, res) => {
-  let roomName = req.params.roomName
-  let chatResult = await findAllChatsInRoom(roomName)
-  res.send(chatResult)
+app.post('/:userName', (req, res) => {
+  console.log("\npost/:userName")
+  let userName = req.params.userName
+  console.log(userName)
+  res.redirect('/' + userName)
 })
 
 
-app.post("/chatRoom/:roomName", express.urlencoded(), async (req, res) => {
+app.post('/:userName/:roomName', async (req, res) => {
+  console.log("\npost/:userName/:roomName")
   let post = req.body
+  let roomName = req.params.roomName 
+  console.log(post)
+  // let userName = req.params.userName
+  // console.log(userName)
+  // let roomName = req.params.roomName
+  // console.log(roomName)
+  await newChat(Date.now(), post.userName, post.body, roomName)
+  res.redirect(`/${roomName}`)
+})
+
+// get specific roomId
+app.get('/:userName/:roomName?', async (req, res) => {
+  console.log("\nget/:userName/:roomName?")
+  let params = req.params
+  console.log(params)
+  let userName = req.params.userName
+  console.log(userName)
   let roomName = req.params.roomName
-  await newChat(Date.now(), post.author, post.body, roomName)
-  res.redirect("/chatRoom/" + roomName)
+  console.log(roomName)
+  res.cookie("userName", userName, {maxAge: 900000, httpOnly: true})
+  res.cookie("roomName", roomName, {maxAge: 900000, httpOnly: true})
+  let chatResult = await findAllChatsInRoom(roomName)
+  res.send(chatResult)
 })
 
 // Get home page
