@@ -1,83 +1,63 @@
 import { React } from "react";
-import { useState, useEffect } from "react";
 import "./Chat.css";
-import App from "../App";
+import ChatBox from "./ChatBox";
 import Rooms from "./Rooms";
 import SignIn from "./SignIn";
 import Welcome from "./Welcome";
 
-function Chat() {
-  const [data, setData] = useState(null);
-  const [currentUser, setCurrentUser] = useState(document.cookie.userName);
-  const [currentRoom, setCurrentRoom] = useState(document.cookie.roomName);
-  const [currentURL, setCurrentURL] = useState(
-    `/${currentUser}/${currentRoom}`
-  );
-
-  useEffect(() => {
-    if (
-      !currentURL.includes(currentUser) ||
-      !currentURL.includes(currentRoom)
-    ) {
-      setCurrentUser(document.location.href.split("/")[3]);
-      if (currentRoom !== undefined) {
-        setCurrentURL(`/${currentUser}/${currentRoom}`);
-      }
-    }
-  }, [currentUser, currentRoom]);
-
+function Chat(props) {
   return (
     <div id="container">
       <SignIn
-        currentUser={currentUser}
-        setCurrentUser={setCurrentUser}
+        currentUser={props.currentUser}
+        setCurrentUser={props.setCurrentUser}
       ></SignIn>
       <div id="header">
-        <Welcome currentUser={currentUser} />
+        <Welcome currentUser={props.currentUser} />
       </div>
       <div id="middle">
         <div id="chatBox">
-          <App
-            data={data}
-            setData={setData}
-            currentRoom={currentRoom}
-            setCurrentRoom={setCurrentRoom}
-            currentURL={currentURL}
-            setCurrentURL={setCurrentURL}
-          />
+          <ChatBox
+            data={props.data}
+            setData={props.setData}
+            currentRoom={props.currentRoom}
+            setCurrentRoom={props.setCurrentRoom}
+            currentURL={props.currentURL}
+            setCurrentURL={props.setCurrentURL}
+          ></ChatBox>
         </div>
         <div id="sideList">
           <label for="allRooms">
             <b>All Rooms</b>
           </label>
           <Rooms
-            currentRoom={currentRoom}
-            setCurrentRoom={setCurrentRoom}
-            currentUser={currentUser}
-            setCurrentUser={setCurrentUser}
+            currentRoom={props.currentRoom}
+            setCurrentRoom={props.setCurrentRoom}
+            currentUser={props.currentUser}
+            setCurrentUser={props.setCurrentUser}
           ></Rooms>
         </div>
       </div>
       <div id="form-area">
         <form
           method="post"
-          action={currentURL}
+          action={props.currentURL}
           onSubmit={(evt) => {
             evt.preventDefault();
-            console.log(currentURL);
+            console.log(props.currentURL);
             evt.target.submit();
           }}
         >
           <input
             name="userName"
             type="text"
-            value={currentUser}
+            value={props.currentUser}
             style={{ display: "none" }}
           />
           <input name="body" type="text" placeholder="Enter message here..." />
           <input type="submit" value="Chat" />
         </form>
-        <form method="get" action={currentURL}>
+        <form method="get" action={props.currentURL}>
           <input type="submit" value="Refresh" />
         </form>
       </div>

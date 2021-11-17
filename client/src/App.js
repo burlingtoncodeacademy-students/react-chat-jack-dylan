@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import ChatBox from "./components/ChatBox";
+import Chat from "./components/Chat";
 
 function App() {
 
@@ -34,7 +34,7 @@ function App() {
   console.log(data);
   if (data !== null) {
     return (
-      <ChatBox data={data} currentUser={currentUser}></ChatBox>
+      <Chat data={data} setData={setData} currentUser={currentUser} setCurrentUser={setCurrentUser} currentRoom={currentRoom} setCurrentRoom={setCurrentRoom} currentURL={currentURL} setCurrentURL={setCurrentURL}></Chat>
     )
   } else {
     return null;
