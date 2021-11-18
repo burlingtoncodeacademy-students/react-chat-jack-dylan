@@ -97,10 +97,8 @@ app.get('/:userName/:roomName?', async (req, res) => {
   console.log(userName)
   let roomName = req.params.roomName
   console.log(roomName)
-  res.cookie("userName", userName, {maxAge: 900000, httpOnly: true})
-  res.cookie("roomName", roomName, {maxAge: 900000, httpOnly: true})
   let chatResult = await findAllChatsInRoom(roomName)
-  res.send(chatResult)
+  res.json(chatResult)
 })
 
 // Get home page

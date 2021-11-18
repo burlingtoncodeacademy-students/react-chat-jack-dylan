@@ -5,40 +5,35 @@ import Chat from "./components/Chat";
 function App() {
 
   const [data, setData] = useState(null)
-  const [currentUser, setCurrentUser] = useState(document.cookie.userName)
-  const [currentRoom, setCurrentRoom] = useState(document.cookie.roomName)
+  const [currentUser, setCurrentUser] = useState('')
+  const [currentRoom, setCurrentRoom] = useState('')
   const [currentURL, setCurrentURL] = useState(
     `/${currentUser}/${currentRoom}`
   );
   
+    console.log(currentUser)
+    console.log(currentRoom)
+
   useEffect(() => {
-    if (
-      !currentURL.includes(currentUser) &&
-      !currentURL.includes(currentRoom) &&
-      currentUser !== undefined &&
-      currentRoom !== undefined 
-    ) {
-      setCurrentUser(document.location.href.split("/")[3]);
+    console.log("reached")
+    console.log("currentURL: ", currentURL)
       setCurrentURL(`/${currentUser}/${currentRoom}`);
-      
+      if (currentUser && currentRoom) {
       fetch(currentURL)
         .then((res) => res.json())
         .then((res) => {
+          console.log(res)
           setData(res)
         });
-    } else {
-      return null
-    }
-  }, [currentRoom, currentURL, data]);
+      }
+  }, [currentRoom, currentURL]);
 
   console.log(data);
-  if (data !== null) {
+  
     return (
       <Chat data={data} setData={setData} currentUser={currentUser} setCurrentUser={setCurrentUser} currentRoom={currentRoom} setCurrentRoom={setCurrentRoom} currentURL={currentURL} setCurrentURL={setCurrentURL}></Chat>
     )
-  } else {
-    return null;
-  }
+
 }
 
 export default App;

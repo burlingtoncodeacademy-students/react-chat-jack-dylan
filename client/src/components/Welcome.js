@@ -1,5 +1,5 @@
 function Welcome(props) {
-    if (props.currentUser === null) {
+    if (props.currentUser === '') {
         return <h1>Welcome to ChatBox!</h1>
     }
     else {

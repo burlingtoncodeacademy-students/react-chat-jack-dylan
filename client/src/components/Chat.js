@@ -11,6 +11,8 @@ function Chat(props) {
       <SignIn
         currentUser={props.currentUser}
         setCurrentUser={props.setCurrentUser}
+        currentURL={props.currentURL}
+        setCurrentURL={props.setCurrentURL}
       ></SignIn>
       <div id="header">
         <Welcome currentUser={props.currentUser} />
@@ -20,6 +22,8 @@ function Chat(props) {
           <ChatBox
             data={props.data}
             setData={props.setData}
+            currentUser={props.currentUser}
+            setCurrentUser={props.setCurrentUser}
             currentRoom={props.currentRoom}
             setCurrentRoom={props.setCurrentRoom}
             currentURL={props.currentURL}
@@ -35,6 +39,8 @@ function Chat(props) {
             setCurrentRoom={props.setCurrentRoom}
             currentUser={props.currentUser}
             setCurrentUser={props.setCurrentUser}
+            currentURL={props.currentURL}
+            setCurrentURL={props.setCurrentURL}
           ></Rooms>
         </div>
       </div>

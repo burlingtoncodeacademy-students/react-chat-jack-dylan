@@ -1,12 +1,11 @@
 function SignIn(props) {
     return(
         <div id="signIn">
-            <form name="signIn" action={`/${props.currentUser}`} method="post" onSubmit={ (evt) => {
+            <form name="signIn" onSubmit={ (evt) => {
                     props.setCurrentUser(evt.target.children[0].value)
+                    evt.preventDefault()
+                    props.setCurrentURL(`/${evt.target.children[0].value}/${props.currentRoom}`)
                     evt.target.children[0].value = ''
-                    evt.preventDefault(
-                    props.setCurrentURL(`/${props.currentUser}/${props.currentRoom}`)
-                    )
                 }
             }>
                 <input name="userName" type="text" placeholder="Please enter your username"/>
