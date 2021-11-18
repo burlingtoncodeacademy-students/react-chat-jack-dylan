@@ -1,5 +1,5 @@
 import { React } from "react";
-import "./Chat.css";
+import "../styles/Chat.css";
 import ChatBox from "./ChatBox";
 import Rooms from "./Rooms";
 import SignIn from "./SignIn";
