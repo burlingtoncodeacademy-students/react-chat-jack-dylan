@@ -6,15 +6,13 @@ const app = express();
 
 const staticDir = process.env.DEV ? "./client/public" : "./client/build";
 
-let cookieParser = require('cookie-parser');
-app.use(cookieParser());
-
 app.use(express.static(staticDir));
 app.use(express.urlencoded({ extended: false }));
 
 
 const mongoose = require("mongoose")
 
+// Connection to Atlas Mongo Database
 mongoose.connect(`mongodb+srv://JackLavallee:${process.env.PASSWORD}@cluster0.wu014.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -31,6 +29,7 @@ const chatSchema = new mongoose.Schema({
   roomName: String
 })
 
+// Creates chats collection and Chat object
 let Chat = mongoose.model("Chat", chatSchema)
 
 // Creates a new chat object and pushes it up to the database
@@ -44,9 +43,6 @@ async function newChat(date, author, body, roomName) {
   })
 
   await chat.save();
-
-
-  //findAll()
 }
 
 // Takes all chats of a room and throws them into an array of objects
@@ -67,25 +63,14 @@ async function findAllChatsInRoom(roomName) {
 
 db.on("error", console.error.bind(console, "connection error"));
 
-app.post('/:userName', (req, res) => {
-  console.log("\npost/:userName")
-  let userName = req.params.userName
-  console.log(userName)
-  res.redirect('/' + userName)
-})
-
-
+// posts a chat entry into the database
 app.post('/:userName/:roomName', async (req, res) => {
   console.log("\npost/:userName/:roomName")
   let post = req.body
   let roomName = req.params.roomName 
   console.log(post)
-  // let userName = req.params.userName
-  // console.log(userName)
-  // let roomName = req.params.roomName
-  // console.log(roomName)
   await newChat(Date.now(), post.userName, post.body, roomName)
-  res.redirect(`/${roomName}`)
+  res.redirect(`/`)
 })
 
 // get specific roomId

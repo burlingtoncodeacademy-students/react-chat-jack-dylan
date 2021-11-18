@@ -8,6 +8,7 @@ import Welcome from "./Welcome";
 function Chat(props) {
   return (
     <div id="container">
+      {/* Enter UserName */}
       <SignIn
         currentUser={props.currentUser}
         setCurrentUser={props.setCurrentUser}
@@ -15,10 +16,12 @@ function Chat(props) {
         setCurrentURL={props.setCurrentURL}
       ></SignIn>
       <div id="header">
+        {/* Displays whether signed in or not */}
         <Welcome currentUser={props.currentUser} />
       </div>
       <div id="middle">
         <div id="chatBox">
+          {/* Displays all chats to current room */}
           <ChatBox
             data={props.data}
             setData={props.setData}
@@ -34,6 +37,7 @@ function Chat(props) {
           <label for="allRooms">
             <b>All Rooms</b>
           </label>
+          {/* Options to select different rooms */}
           <Rooms
             currentRoom={props.currentRoom}
             setCurrentRoom={props.setCurrentRoom}
@@ -45,13 +49,12 @@ function Chat(props) {
         </div>
       </div>
       <div id="form-area">
+        
         <form
           method="post"
           action={props.currentURL}
-          onSubmit={(evt) => {
-            evt.preventDefault();
-            console.log(props.currentURL);
-            evt.target.submit();
+          onSubmit={() => {
+            props.setCurrentURL(props.currentURL)
           }}
         >
           <input

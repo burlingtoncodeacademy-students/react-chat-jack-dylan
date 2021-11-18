@@ -64,14 +64,25 @@ form {
   padding: 1em;
 }
 
-input,
-button,
-h5 {
-  background-color: white;
-}
-
 h5 {
   margin: 0;
   padding: 0;
   text-align: left;
+}
+
+#blurb {
+  color: white;
+  padding: .5em;
+  width: 30%;
+  border-radius: 4px;;
+}
+
+.user {
+  background-color: deepskyblue;
+  margin: 1em 1em 1em auto;
+}
+
+.other {
+  background-color: mediumseagreen;
+  margin: 1em auto 1em 1em;
 }

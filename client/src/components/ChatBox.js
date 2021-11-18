@@ -5,10 +5,10 @@ function ChatBox(props) {
             console.log("blurb.author", blurb.author)
             console.log("props.currentUser", props.currentUser)
             if (blurb.author === props.currentUser) {
-                return <h5 style={{textAlign: "right"}}>{blurb.author + ": " + blurb.body}</h5>
+                return <h5 id="blurb" class="user">{blurb.author + ": " + blurb.body}</h5>
             }
             else {
-                return <h5 style={{textAlign: "left"}}>{blurb.author + ": " + blurb.body}</h5>
+                return <h5 id="blurb" class="other">{blurb.author + ": " + blurb.body}</h5>
             }
         })
         return chatThread
