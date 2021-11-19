@@ -1,41 +1,65 @@
+:root {
+  --color1: #fe5d26;
+  --color2: #f2c078;
+  --color3: #faedca;
+  --color4: #C1DBB3;
+  --color5: #7EBC89;
+  --offWhite: whitesmoke;
+  --greyShade: rgba(223, 222, 222, 0.945);
+}
+
 * {
-  /* margin: 0; */
-  /* padding: 0; */
-  /* border: 1px solid black; */
-  background-color: antiquewhite;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: var(--color3);
 }
 
 #container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  /* justify-items: center; */
-  /* justify-content: center; */
   text-align: center;
-  /* max-width: 60vw; */
-  /* max-height: 80vh; */
 }
 
 #header {
+  background-color: var(--color2);
+  flex: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+#signIn {
+  display: inline-block;
+  flex: 3;
+}
+
+#welcomeTitle {
+  display: inline-block;
+  flex: 7;
 }
 
 #middle {
   display: flex;
+  flex: 8;
   flex-direction: row;
   justify-content: center;
-
-  /* width: max-content; */
-  /* border: 1px solid black; */
-  /* align-content: center; */
 }
 
-#chatBox {
-  background-color: white;
-  height: 300px;
-  width: 300px;
+#sideList {
+  background-color: var(--color4);
+  flex: 2;
+}
+
+#chatContainer {
+  background-color: var(--offWhite);
+  flex: 8;
+  height: 80vh;
   overflow-y: scroll;
+  padding-bottom: 5em;
 }
 
 .chatText {
@@ -44,19 +68,54 @@
   align-content: left;
 }
 
-#allRooms {
-  margin: 1em;
-  /* padding: 1em; */
-  list-style-type: none;
-  text-align: left;
+button {
+  cursor: pointer;
+}
+
+button, input {
+  background-color: var(--offWhite);
+  border: none;
+}
+
+.roomButton {
+  margin-top: 1em;
+  width: 100%;
+  padding: 1em;
+}
+
+.roomButton:focus {
+  background-color: var(--color5);
 }
 
 #form-area {
+  position: fixed;
+  width: 80vw;
+  bottom: 0;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  /* margin: 1em; */
-  /* padding: 1em; */
+  background-color: var(--greyShade);
+}
+
+#form-area form {
+  display: flex;
+  width: 100%;
+}
+
+#form-area form:first-child {
+  flex: 8;
+}
+
+#form-area form:last-child {
+  flex: 1;
+}
+
+#form-area form input[type="submit"] {
+  margin-left: .5em;
+  flex: 2;
+}
+
+input[name="body"] {
+  flex: 8;
 }
 
 form {
@@ -73,16 +132,16 @@ h5 {
 #blurb {
   color: white;
   padding: .5em;
-  width: 30%;
-  border-radius: 4px;;
+  width: 37%;
+  border-radius: 4px;
 }
 
 .user {
-  background-color: deepskyblue;
+  background-color: var(--color1);
   margin: 1em 1em 1em auto;
 }
 
 .other {
-  background-color: mediumseagreen;
+  background-color: var(--color5);
   margin: 1em auto 1em 1em;
 }
