@@ -4,6 +4,7 @@ function SignIn(props) {
             <form name="signIn" onSubmit={ (evt) => {
                     props.setCurrentUser(evt.target.children[0].value)
                     evt.preventDefault()
+                    props.setCurrentRoom('main') // this sets the room and refreshes the page upon sign in
                     props.setCurrentURL(`/${evt.target.children[0].value}/${props.currentRoom}`)
                     evt.target.children[0].value = ''
                 }

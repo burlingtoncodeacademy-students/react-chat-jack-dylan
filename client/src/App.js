@@ -11,7 +11,7 @@ function App() {
     `/${currentUser}/${currentRoom}`
   );
   
-    console.log(currentUser)
+    // console.log(currentUser)
     console.log(currentRoom)
 
   useEffect(() => {

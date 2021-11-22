@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import "../styles/Chat.css";
 import ChatBox from "./ChatBox";
 import Rooms from "./Rooms";
@@ -6,6 +6,25 @@ import SignIn from "./SignIn";
 import Welcome from "./Welcome";
 
 function Chat(props) {
+  // here is the 10 second timer function that needs work to get to run
+  // currently has a not valid URL
+  // console.log(props.currentURL) // for testing
+  // const timerFetch = () => {
+  //   fetch(props.currentURL) // this is invalid on the first run of the timer, need to work on this.
+  //     .then((res) => res.json())
+  //     .then((msg) => {
+  //       props.setData(msg);
+  //     });
+  // };
+  // useEffect(() => {
+  //   timerFetch();
+  //   const intervalId = setInterval(() => {
+  //     timerFetch();
+  //   }, 10000);
+  //   return () => clearInterval(intervalId);
+  // }, );
+
+
   return (
     <div id="container">
       <div id="header">
@@ -13,6 +32,8 @@ function Chat(props) {
         <SignIn
           currentUser={props.currentUser}
           setCurrentUser={props.setCurrentUser}
+          currentRoom={props.currentRoom}
+          setCurrentRoom={props.setCurrentRoom}
           currentURL={props.currentURL}
           setCurrentURL={props.setCurrentURL}
         ></SignIn>
@@ -66,11 +87,11 @@ function Chat(props) {
               <input
                 name="body"
                 type="text"
-                placeholder="Enter message here..."
+                placeholder={props.currentURL}
               />
               <input type="submit" value="Chat" />
             </form>
-            <form method="get" action={props.currentURL}>
+            <form >
               <input type="submit" value="Refresh" />
             </form>
           </div>

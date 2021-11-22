@@ -19,6 +19,11 @@ mongoose.connect(`mongodb+srv://JackLavallee:${process.env.PASSWORD}@cluster0.wu
   useUnifiedTopology: true,
 })
 
+// uncomment below for local testing
+// mongoose.connect("mongodb://localhost:27017/chat-db", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// })
 
 const db = mongoose.connection;
 
@@ -65,7 +70,7 @@ async function findAllChatsInRoom(roomName) {
 db.on("error", console.error.bind(console, "connection error"));
 
 // posts a chat entry into the database
-app.post('/:userName/:roomName', async (req, res) => {
+app.post('/:userName/:roomName', express.urlencoded(), async (req, res) => {
   console.log("\npost/:userName/:roomName")
   let post = req.body
   let roomName = req.params.roomName 
@@ -75,7 +80,7 @@ app.post('/:userName/:roomName', async (req, res) => {
 })
 
 // get specific roomId
-app.get('/:userName/:roomName?', async (req, res) => {
+app.get('/:userName/:roomName?', express.urlencoded(), async (req, res) => {
   console.log("\nget/:userName/:roomName?")
   let params = req.params
   console.log(params)
