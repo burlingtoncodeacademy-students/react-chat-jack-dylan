@@ -1,4 +1,3 @@
-import { React, useEffect } from "react";
 import "../styles/Chat.css";
 import ChatBox from "./ChatBox";
 import Rooms from "./Rooms";
@@ -6,25 +5,6 @@ import SignIn from "./SignIn";
 import Welcome from "./Welcome";
 
 function Chat(props) {
-  // here is the 10 second timer function that needs work to get to run
-  // currently has a not valid URL
-  // console.log(props.currentURL) // for testing
-  // const timerFetch = () => {
-  //   fetch(props.currentURL) // this is invalid on the first run of the timer, need to work on this.
-  //     .then((res) => res.json())
-  //     .then((msg) => {
-  //       props.setData(msg);
-  //     });
-  // };
-  // useEffect(() => {
-  //   timerFetch();
-  //   const intervalId = setInterval(() => {
-  //     timerFetch();
-  //   }, 10000);
-  //   return () => clearInterval(intervalId);
-  // }, );
-
-
   return (
     <div id="container">
       <div id="header">
@@ -55,10 +35,12 @@ function Chat(props) {
             setCurrentURL={props.setCurrentURL}
           ></Rooms>
         </div>
-        <div id="chatContainer" onLoad={ (evt) => {
-            console.log(evt)
-          }
-        }>
+        <div
+          id="chatContainer"
+          onLoad={(evt) => {
+            console.log(evt);
+          }}
+        >
           {/* Displays all chats to current room */}
           <ChatBox
             data={props.data}
@@ -71,6 +53,7 @@ function Chat(props) {
             setCurrentURL={props.setCurrentURL}
           ></ChatBox>
           <div id="form-area">
+            {/* here is the input area at the bottom of the page, it posts to the server that writes to the database  */}
             <form
               method="post"
               action={props.currentURL}
@@ -78,20 +61,18 @@ function Chat(props) {
                 props.setCurrentURL(props.currentURL);
               }}
             >
+            {/* the userName input doesn't display but is here to be included in the post */}
               <input
                 name="userName"
                 type="text"
                 value={props.currentUser}
                 style={{ display: "none" }}
               />
-              <input
-                name="body"
-                type="text"
-                placeholder={props.currentURL}
-              />
+              <input name="body" type="text" placeholder={props.currentURL} />
               <input type="submit" value="Chat" />
             </form>
-            <form >
+            <form>
+            {/* unfinished refresh button */}
               <input type="submit" value="Refresh" />
             </form>
           </div>
